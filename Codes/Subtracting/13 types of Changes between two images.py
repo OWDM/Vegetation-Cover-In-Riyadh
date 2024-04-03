@@ -88,11 +88,6 @@ negative_cmap = ListedColormap(negative_colors)
 
 
 
-
-
-
-
-
 # Calculate the distribution of categorized changes
 (unique, counts) = np.unique(categorized_changes, return_counts=True)
 frequencies = dict(zip(unique, counts))
@@ -140,14 +135,13 @@ combined_cmap = LinearSegmentedColormap.from_list("combined_cmap", colors)
 plt.figure(figsize=(10, 10))
 im = plt.imshow(combined_changes, cmap=combined_cmap, interpolation='nearest')
 
-# Create a colorbar with a tick for each class
-#cbar = plt.colorbar(im, ticks=[-6, -4, -2, 0, 2, 4, 6])
-#cbar.ax.set_yticklabels(['-6', '-4', '-2', '0', '2', '4', '6'])  # Change classes
-#cbar.set_label('Change Class')
+cbar = plt.colorbar(im, ticks=[-6, -4, -2, 0, 2, 4, 6])
+cbar.ax.set_yticklabels(['-6', '-4', '-2', '0', '2', '4', '6'])  # Change classes
+cbar.set_label('Change Class')
 
-#plt.title('Combined Positive, Negative, and No Changes in NDVI')
-# plt.xlabel('Pixel Column')
-# plt.ylabel('Pixel Row')
+plt.title('Combined Positive, Negative, and No Changes in NDVI')
+plt.xlabel('Pixel Column')
+plt.ylabel('Pixel Row')
 plt.grid(False)
 plt.show()
 
