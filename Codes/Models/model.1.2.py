@@ -5,14 +5,16 @@ from skimage.io import imread
 from skimage.transform import resize
 import os
 
+# Set paths to the images and masks
 image_dir = 'N:\\My Drive\\Data\\RUH'
 mask_dir = 'N:\\My Drive\\Data\\Mask'
-
-image_files = sorted(os.listdir(image_dir))[:30000]
-mask_files = sorted(os.listdir(mask_dir))[:30000]
+# List of image and mask files
+image_files = sorted(os.listdir(image_dir))[:20000]
+mask_files = sorted(os.listdir(mask_dir))[:20000]
 
 # Function to normalize images and encode masks
 def prepare_data(img_path, mask_path):
+    # Read the image and mask files
     img = imread(img_path) / 255.0  # Normalize to [0, 1]
     mask = imread(mask_path, as_gray=True)  # Read mask as grayscale
     # Resize images and masks if not already 256x256
@@ -44,11 +46,14 @@ def generate_batches(image_files, mask_files, batch_size):
                 masks.append(mask)
             yield np.array(images), np.array(masks)
 
+
+
 from sklearn.model_selection import train_test_split
 # Split the dataset into training and validation sets
 image_files_train, image_files_val, mask_files_train, mask_files_val = train_test_split(
     image_files, mask_files, test_size=0.2, random_state=42)
 
+# Define batch size
 batch_size = 32
 
 # Training and validation generator
@@ -119,10 +124,10 @@ def unet_model(input_size=(256, 256, 3), num_classes=4):
 
     return model
 
-
+# Create the U-Net model
 unet = unet_model()
 
-
+# Display the model architecture
 unet.summary()
 
 
@@ -137,7 +142,7 @@ unet.compile(
 )
 
 # Define callbacks for saving the model and early stopping
-model_checkpoint = ModelCheckpoint('unet_segmentation.keras', monitor='val_loss', save_best_only=True)
+model_checkpoint = ModelCheckpoint('unet_segmentation_3.keras', monitor='val_loss', save_best_only=True)
 early_stopping = EarlyStopping(monitor='val_loss', patience=10)
 
 # Training the model
@@ -145,7 +150,7 @@ history = unet.fit(
     x=train_generator,
     y=None,  # Since the generator yields both images and masks, y is not separately provided
     batch_size=None,  # Batch size is handled by the generator
-    epochs=30,
+    epochs=20,
     steps_per_epoch=int(np.ceil(len(image_files_train) / batch_size)),  # Convert to int
     validation_data=val_generator,
     validation_steps=int(np.ceil(len(image_files_val) / batch_size)),  # Convert to int
