@@ -77,7 +77,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, Concatenate, Dropout
 from tensorflow.keras.optimizers import Adam
 
-def unet_model(input_size=(256, 256, 3), num_classes=4):  # Adjust input_size to include 3 channels for RGB
+def unet_model(input_size=(256, 256, 3), num_classes=4):  
     inputs = Input(input_size)
 
     # Encoder
