@@ -8,12 +8,12 @@ gdal.UseExceptions()
 
 
 # Load and process your NDVI data
-image_path1 = gdal.Open("G:\\My Drive\\Alnoabih_NDVI\\NDVI_alnoabih_1.tif")
+image_path1 = gdal.Open("C:\\Users\\Musae\\Documents\\GitHub-REPOs\\Senior-project_Doc\\Docs\\NDVI-Data\\NDVI_RUH-B4-B8_2018-12-15.tif")
 band1 = image_path1.GetRasterBand(1)
 ndvi1 = band1.ReadAsArray()
 ndvi_processed_1 = np.nan_to_num(ndvi1, nan=0.01)
 
-image_path2 = gdal.Open("G:\\My Drive\\Alnoabih_NDVI\\NDVI_alnoabih_2.tif")
+image_path2 = gdal.Open("C:\\Users\\Musae\\Documents\\GitHub-REPOs\\Senior-project_Doc\\Docs\\NDVI-Data\\NDVI_RUH-B4-B8_2019-01-14.tif")
 band2 = image_path2.GetRasterBand(1)
 ndvi2 = band2.ReadAsArray()
 ndvi_processed_2 = np.nan_to_num(ndvi2, nan=0.01)
