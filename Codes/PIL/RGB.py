@@ -3,12 +3,12 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 
-dataset = gdal.Open("G:\\My Drive\\RUH_all_bands\\RUH-All-Bands_2018-12-15.tif")
+dataset = gdal.Open(r"H:\My Drive\Riyadh_folder\Riyadh_Median_2021-06-15_to_2021-06-29.tif")
 
 # Read the bands - assuming the bands are 4, 3, 2 for RGB
-red = dataset.GetRasterBand(4).ReadAsArray().astype(float)
-green = dataset.GetRasterBand(3).ReadAsArray().astype(float)
-blue = dataset.GetRasterBand(2).ReadAsArray().astype(float)
+red = dataset.GetRasterBand(3).ReadAsArray().astype(float)
+green = dataset.GetRasterBand(2).ReadAsArray().astype(float)
+blue = dataset.GetRasterBand(1).ReadAsArray().astype(float)
 
 # Replace any potential NaN ort infinite values with zeros
 red[np.isnan(red) | np.isinf(red)] = 0
@@ -37,7 +37,7 @@ rgb_8bit = np.stack((red_8bit, green_8bit, blue_8bit), axis=2)
 image = Image.fromarray(rgb_8bit)
 
 # Save the image to a file
-image.save("G:\\My Drive\\output_image.png")  # for PNG format
+#image.save("H:\\My Drive\\rgb new")  # for PNG format
 
 # Display the image using PIL's show() method
 image.show()
